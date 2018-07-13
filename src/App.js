@@ -6,10 +6,11 @@ class App extends Component {
 
   state = {
     persons: [
-      {name: 'Max', age: 28},
-      {name: 'Manu', age: 29},
-      {name: 'Stephanie', age: 26},
-    ]    
+      {id: 1, name: 'Max', age: 28},
+      {id: 2, name: 'Manu', age: 29},
+      {id: 3, name: 'Stephanie', age: 26},
+    ],    
+    showPersons: false,
   }
 
   //handler indicates this is a 
@@ -26,13 +27,40 @@ class App extends Component {
     ]})
   }
 
-  nameChangedHandler = (event) =>{
-    this.setState({
-      persons:[
-        {name: 'Max', age: 28},
-        {name: event.target.value, age: 29},
-        {name: 'Stephanie', age: 26},
-    ]})
+  nameChangedHandler = (event, id) =>{
+
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
+    });
+
+    //distributes all the properties of the objected we fetched into the new object
+    const person = {
+      ...this.state.persons[personIndex]
+    }
+    
+    //alternative to the above code for copying the object 
+    //const person = Object.assign({}, this.state.persons[personIndex]);
+
+    person.name = event.target.value;
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
+    this.setState({persons: persons})
+  }
+
+  //slice without parameters copies the array
+  //or use es6 operator spread inside of brackets, indicating copying list to new array
+  //you should aways update states in an immutable fashion
+  deletePersonHandler = (personIndex) => {
+    //const persons = this.state.persons.slice();
+    const persons = [...this.state.persons];
+    persons.splice(personIndex, 1);
+    this.setState({persons:persons});
+  }
+
+  togglePersonsHandler = () => {
+    const doesShow = this.state.showPersons;
+    this.setState({showPersons: !doesShow});
   }
 
   //don't add parentheses to function on click
@@ -47,23 +75,39 @@ class App extends Component {
       cursor: 'pointer'
     }
 
+    let persons = null;
+
+    console.log(this.state.showPersons);
+
+    {
+//      maps elements in a given array into something else
+    }
+    if(this.state.showPersons) {
+      persons = (
+        <div>
+          {this.state.persons.map((person, index)  => {
+            return <Person 
+            name={person.name} 
+            age={person.age}
+            key={person.id}
+            click={() => this.deletePersonHandler(index)}
+            changed={(event) => this.nameChangedHandler(event, person.id)}/>
+          })}
+
+
+      </div> 
+      );
+    }
+
     return (
       <div className="App">
         <h1>{"Hi! I'm a react app!"}</h1>
         <p>This is really working!</p>        
         <button style={style}
-          onClick={() => this.switchNameHandler('Carla')}>Switch Name</button>
-        <Person 
-          name={this.state.persons[0].name} 
-          age={this.state.persons[0].age}/>
-        <Person 
-          name={this.state.persons[1].name} 
-          age={this.state.persons[1].age}
-          click={this.switchNameHandler.bind(this, 'Max!')}
-          changed={this.nameChangedHandler}>My hobbies: Racing</Person>
-        <Person 
-          name={this.state.persons[2].name} 
-          age={this.state.persons[2].age}/>
+          onClick={this.togglePersonsHandler}>Toggle Persons</button>
+
+          {persons}
+
       </div>      
     );
   }
