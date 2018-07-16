@@ -1,0 +1,7 @@
+problem:
+installed Radium 'using npm install --save radium'
+the installation deleted babel eslint and node scripts
+
+solution:
+reran npm install and npm install babel-eslint --save-dev
+restarted editor
