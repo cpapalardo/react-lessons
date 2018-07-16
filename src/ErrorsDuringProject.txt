@@ -5,3 +5,13 @@ the installation deleted babel eslint and node scripts
 solution:
 reran npm install and npm install babel-eslint --save-dev
 restarted editor
+
+problem:
+eslint throwing errors for props validation, 
+which I don't care for during the earlier lessons
+
+solution:
+on the "rules" section of my eslintrc.json, added
+"react/prop-types": "warn"
+reran npm start
+might look into eslint-plugin-react, recommended on eslint website

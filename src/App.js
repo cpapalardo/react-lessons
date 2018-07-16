@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from  './App.css';
 import Person from './Person/Person';
 
 class App extends Component {
@@ -67,19 +67,8 @@ class App extends Component {
   //button onClick example can be ineficcient. Use bind whenever possible
   render() {
 
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font:'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer',
-    }
-
     let persons = null;
-
-    console.log(this.state.showPersons);
-
+    let buttonClass = '';
     {
 //      maps elements in a given array into something else
     }
@@ -97,23 +86,23 @@ class App extends Component {
       </div>       
       );
 
-      style.backgroundColor = 'red';
+      buttonClass = classes.Red;
     }
 
-    const classes = []; //= ['red', 'bold'].join(' ');
+    const assignedClasses = []; //= ['red', 'bold'].join(' ');
 
     if(this.state.persons.length <= 2){
-      classes.push('red');      
+      assignedClasses.push(classes.red);      
     }
     if(this.state.persons.length <= 1){
-      classes.push('bold');
+      assignedClasses.push(classes.bold);
     }
 
     return (
-        <div className="App">
+        <div className={classes.App}>
           <h1>{"Hi! I'm a react app!"}</h1>
-          <p className={classes.join(' ')}>This is really working!</p>        
-          <button style={style}
+          <p className={assignedClasses.join(' ')}>This is really working!</p>        
+          <button className={buttonClass}
             onClick={this.togglePersonsHandler}>Toggle Persons</button>
 
             {persons}
