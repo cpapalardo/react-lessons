@@ -10,7 +10,16 @@ class App extends PureComponent {
 
   constructor(props){
     super(props);
-    console.log('[App.js] Inside constructor', props);    
+    console.log('[App.js] Inside constructor', props);  
+    this.state = {
+      persons: [
+        {id: 1, name: 'Max', age: 28},
+        {id: 2, name: 'Manu', age: 29},
+        {id: 3, name: 'Stephanie', age: 26},
+      ],    
+      showPersons: false,
+      toggleClicked: 0
+    }  
   }
 
   UNSAFE_componentWillMount (){
@@ -30,15 +39,6 @@ class App extends PureComponent {
 
   UNSAFE_componentWillUpdate(nextProps, nextState){
     console.log('[App.js] Inside UNSAFE_componentWillUpdate', nextProps, nextState);
-  }
-
-  state = {
-    persons: [
-      {id: 1, name: 'Max', age: 28},
-      {id: 2, name: 'Manu', age: 29},
-      {id: 3, name: 'Stephanie', age: 26},
-    ],    
-    showPersons: false,
   }
 
   //handler indicates this is a 
@@ -88,7 +88,10 @@ class App extends PureComponent {
 
   togglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
-    this.setState({showPersons: !doesShow});
+    this.setState( (previousState, props) => {
+      return {showPersons: !doesShow, 
+        toggleClicked: previousState.toggleClicked + 1}
+    });
   }
 
   //don't add parentheses to function on click
