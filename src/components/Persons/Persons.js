@@ -7,7 +7,8 @@ import Person from './Person/Person';
 class Persons extends PureComponent{
     constructor(props){
         super(props);
-        console.log('[Persons.js] Inside constructor', props);    
+        console.log('[Persons.js] Inside constructor', props);
+        this.lastPersonRef = React.createRef();
       }
     
       UNSAFE_componentWillMount (){
@@ -16,6 +17,7 @@ class Persons extends PureComponent{
     
       componentDidMount(){
         console.log('[Persons.js] Inside componentDidMount');
+        this.lastPersonRef.current.focus();
       }
 
       UNSAFE_componentWillReceiveProps(nextProps){
@@ -44,7 +46,8 @@ class Persons extends PureComponent{
             position={index}
             age={person.age}
             changed={(event) => this.props.changed(event, person.id)}
-            key={person.id}/>            
+            key={person.id}
+            ref={this.lastPersonRef}/>            
           });
     }
 }
