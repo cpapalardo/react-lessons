@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import classes from './Cockpit.css';
 import Aux from '../../hoc/AuxComponent';
 
@@ -21,12 +21,12 @@ const cockpit = (props) => {
     }
 
     return (
-    <Aux>
+    <Fragment>
         <h1>{props.appTitle}</h1>
         <p className={assignedClasses.join(' ')}>This is really working!</p>        
         <button className={buttonClass}
         onClick={props.clicked}>Toggle Persons</button>
-    </Aux>
+    </Fragment>
     );
 };
 
