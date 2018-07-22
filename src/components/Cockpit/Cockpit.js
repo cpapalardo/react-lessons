@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
+import PropTypes from 'prop-types';
 import classes from './Cockpit.css';
-import Aux from '../../hoc/AuxComponent';
 
 const cockpit = (props) => {
 
@@ -28,6 +28,14 @@ const cockpit = (props) => {
         onClick={props.clicked}>Toggle Persons</button>
     </Fragment>
     );
+};
+
+cockpit.propTypes = {
+    showPersons: PropTypes.bool,
+    persons: PropTypes.arrayOf(PropTypes.object),
+    clicked: PropTypes.func,
+    changed: PropTypes.func,
+    appTitle: PropTypes.string
 };
 
 export default cockpit;

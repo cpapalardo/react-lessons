@@ -1,6 +1,7 @@
 
 import React, {PureComponent} from 'react';
-import Person from './Person/Person'
+import PropTypes from 'prop-types';
+import Person from './Person/Person';
 
 //function names are often lower case
 class Persons extends PureComponent{
@@ -45,6 +46,12 @@ class Persons extends PureComponent{
             key={person.id}/>            
           });
     }
+}
+
+Persons.propTypes = {
+    persons: PropTypes.arrayOf(PropTypes.object),
+    clicked: PropTypes.func,
+    changed: PropTypes.func,
 }
 
 export default Persons;

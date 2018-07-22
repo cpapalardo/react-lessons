@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import classes from  './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
@@ -88,6 +89,7 @@ class App extends PureComponent {
 
   togglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
+    // eslint-disable-next-line
     this.setState( (previousState, props) => {
       return {showPersons: !doesShow, 
         toggleClicked: previousState.toggleClicked + 1}
@@ -123,4 +125,9 @@ class App extends PureComponent {
     );
   }
 }
+
+App.propTypes = {
+  title: PropTypes.string
+};
+
 export default withClass(App, classes.App);
