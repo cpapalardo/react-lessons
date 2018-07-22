@@ -15,3 +15,13 @@ on the "rules" section of my eslintrc.json, added
 "react/prop-types": "warn"
 reran npm start
 might look into eslint-plugin-react, recommended on eslint website
+
+problem: after creatng withClass function and using it as
+higher order component, kept getting the error:
+"Component definition is missing display name react/display-name"
+
+solution:
+on the "rules" section of eslintrc.json, added
+"react/display-name": "off"
+the same as "react/display-name": 0
+reran npm start
