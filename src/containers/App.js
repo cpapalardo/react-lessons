@@ -7,6 +7,8 @@ import Aux from '../hoc/AuxComponent';
 //importing a function
 import withClass from '../hoc/withClass';
 
+export const AuthContext = React.createContext(false);
+
 class App extends PureComponent {
 
   constructor(props){
@@ -19,7 +21,8 @@ class App extends PureComponent {
         {id: 3, name: 'Stephanie', age: 26},
       ],    
       showPersons: false,
-      toggleClicked: 0
+      toggleClicked: 0,
+      authenticated: false
     }  
   }
 
@@ -31,6 +34,10 @@ class App extends PureComponent {
     console.log('[App.js] Inside componentDidMount');
   }
 
+  componentDidUpdate(){
+    console.log('[App.js] Inside componentDidUpdate');
+  }
+
   // shouldComponentUpdate(nextProps, nextState){
   //   console.log('[App.js] Inside shouldComponentUpdate', nextProps, nextState);
 
@@ -40,6 +47,23 @@ class App extends PureComponent {
 
   UNSAFE_componentWillUpdate(nextProps, nextState){
     console.log('[App.js] Inside UNSAFE_componentWillUpdate', nextProps, nextState);
+  }
+
+
+  static getDerivedStateFromProps(nextProps, previousState){
+    console.log(
+      '[App.js] Inside UNSAFE_componentWillUpdate', 
+      nextProps, 
+      previousState
+    );
+    return previousState;
+  }
+
+  //snapshot of dom before it changes
+  getSnapshotBeforeUpdate(){
+    console.log(
+      '[App.js] Inside getSnapshotBeforeUpdate',
+    );
   }
 
   //handler indicates this is a 
@@ -96,6 +120,10 @@ class App extends PureComponent {
     });
   }
 
+  loginHandler = () => {
+    this.setState({authenticated: true});
+  }
+
   //don't add parentheses to function on click
   //button onClick example can be ineficcient. Use bind whenever possible
   render() {
@@ -112,6 +140,8 @@ class App extends PureComponent {
       );
     }
 
+    //providing authenticated to all child components in AuthContext
+
     return (
       <Aux>
           <button onClick={() => {this.setState({showPersons: true})}}>Show Persons</button>
@@ -119,8 +149,11 @@ class App extends PureComponent {
             appTitle={this.props.title}
             showPersons={this.state.showPersons} 
             persons={this.state.persons}
+            login={this.loginHandler}
             clicked={this.togglePersonsHandler}/>
-            {persons}
+            <AuthContext.Provider value={this.state.authenticated}>
+              {persons}
+            </AuthContext.Provider>
       </Aux>
     );
   }

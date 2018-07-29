@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classes from './Person.css';
 import Aux from '../../../hoc/AuxComponent';
 import withClass from '../../../hoc/withClass';
-
+import { AuthContext } from '../../../containers/App';
 
 //function names are often lower case
 class Person extends Component {
@@ -39,6 +39,10 @@ class Person extends Component {
         //ref is only available in React Components, 
         //usually used for controlling focus, never to style or display
         return <Aux>
+
+        <AuthContext.Consumer>
+            {auth => auth ? <p>{"I'm authenticated"}</p> : null}
+        </AuthContext.Consumer>
             <p onClick={this.props.click}>I am {this.props.name} and I am {this.props.age} years old!</p>
             <p>{this.props.children}</p>
             <input 
@@ -61,7 +65,8 @@ Person.propTypes = {
     name: PropTypes.string,
     age: PropTypes.number,
     changed: PropTypes.func,
-    children: PropTypes.element
+    children: PropTypes.element,
+    authenticated: PropTypes.bool
 };
 
 export default withClass(Person, classes.Person);
